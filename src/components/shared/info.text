@@ -1,0 +1,26 @@
+sotres Styled-components like Button, TextInput, Box and closely related styled-components ex: button and submit or different flavours of button in the same file
+ex:
+snippet from my shared/Buttons.tsx:
+
+const InputButtonShared = styled.input` font-size: 0.9em; margin: 0 auto; display: block; border: none;`;
+
+export const Button = styled(InputButtonShared)
+.attrs({ type: "button" })
+` background: none; margin: 14px auto;`;
+
+export const Submit = styled(InputButtonShared)
+.attrs({ type: "submit" })
+<{ bg?: string; }>
+`
+background: ${p => (p.bg) ? p.bg : "none"};
+
+Thirdly, components that are used only in just one JSX element are stored directly that jsx/tsx file. Depending on the project size, I might move these into their own files, but because I re-use a lot of components, these remaining components are generally very short and small so they don't clutter the file.
+
+if I were to need a varying animation for Submit, for example, I could create an styled.keyframe component via styled-components, add it to the component, then pass props to it to change its properties as needed. A simple example here is enabling and disabling animation via props:
+
+const rotate = keyframes` [...keyframe properties...]`;
+
+export const Submit = styled(InputButtonShared)
+.attrs({ type: "submit" })
+<{ bg?: string; hasAnim?: boolean }>
+` background: ${p => (p.bg) ? p.bg : "none"}; animation: ${p => (p.hasAnim) ? rotate : "none"}`;
